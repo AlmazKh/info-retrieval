@@ -1,18 +1,36 @@
 import scrapy
+import xml.etree.ElementTree as ET
+from scrapy.crawler import CrawlerProcess
+
 
 class BlogSpider(scrapy.Spider):
     name = 'spider'
 
     def start_requests(self):
-        with open("links.txt") as file:
-            urls = [row.strip() for row in file]
-        print("URLS ----------------", urls)
-        for url in urls:
+        for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
-    def parse(self, response):
-        page = response.url.split("/")[-1]
-        filename = f'wiki-{page}.html'
+    def parse(self, response, **kwargs):
+        page = response.url.split("/")[-2]
+        filename = f'habr-{page}.html'
         with open(filename, 'wb') as f:
             f.write(response.body)
+
         self.log(f'Saved file {filename}')
+
+
+def parse_urls_xml(xml_file):
+    doc = ET.parse(xml_file)
+    root = doc.getroot()
+    urls = [elem[0].text for elem in root]
+    return urls
+
+
+pages_url = parse_urls_xml("index.xml")
+
+process = CrawlerProcess()
+process.crawl(BlogSpider, start_urls=pages_url)
+process.start()
+
+# scr = BlogSpider(urls=pages_url)
+# scr.start_requests()
