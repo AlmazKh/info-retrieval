@@ -1,3 +1,5 @@
+import os
+
 import scrapy
 import xml.etree.ElementTree as ET
 from scrapy.crawler import CrawlerProcess
@@ -12,11 +14,11 @@ class BlogSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         page = response.url.split("/")[-2]
-        filename = f'habr-{page}.html'
-        with open(filename, 'wb') as f:
+        file_name = f'habr-{page}.html'
+        path_name = os.path.join('pages_html', file_name)
+        with open(path_name, 'wb') as f:
             f.write(response.body)
-
-        self.log(f'Saved file {filename}')
+        self.log(f'Saved file {path_name}')
 
 
 def parse_urls_xml(xml_file):
