@@ -1,5 +1,4 @@
 import os
-
 import scrapy
 import xml.etree.ElementTree as ET
 from scrapy.crawler import CrawlerProcess
@@ -24,7 +23,16 @@ class BlogSpider(scrapy.Spider):
 def parse_urls_xml(xml_file):
     doc = ET.parse(xml_file)
     root = doc.getroot()
-    urls = [elem[0].text for elem in root]
+    urls = []
+    # открываем файл result.txt для записи
+    with open("index.txt", "w") as result:
+        # проходимся по всем элементам (документам) из index.xml
+        for elt in root:
+            # сохраняем url для дальнейшего парсинга страницы
+            urls.append(elt[0].text)
+            # записываем номер и url документа в файл index.txt
+            result.write("{} {}\n".format(elt.get('id'), elt[0].text))
+        result.close()
     return urls
 
 
@@ -33,6 +41,3 @@ pages_url = parse_urls_xml("index.xml")
 process = CrawlerProcess()
 process.crawl(BlogSpider, start_urls=pages_url)
 process.start()
-
-# scr = BlogSpider(urls=pages_url)
-# scr.start_requests()
