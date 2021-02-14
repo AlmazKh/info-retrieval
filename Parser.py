@@ -13,7 +13,7 @@ class BlogSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         page = response.url.split("/")[-2]
-        file_name = f'habr-{page}.html'
+        file_name = f'{page}.html'
         path_name = os.path.join('pages_html', file_name)
         with open(path_name, 'wb') as f:
             f.write(response.body)
@@ -31,7 +31,7 @@ def parse_urls_xml(xml_file):
             # сохраняем url для дальнейшего парсинга страницы
             urls.append(elt[0].text)
             # записываем номер и url документа в файл index.txt
-            result.write("{} {}\n".format(elt.get('id'), elt[0].text))
+            result.write("{} {}\n".format(elt[0].text.split("/")[-2], elt[0].text))
         result.close()
     return urls
 
