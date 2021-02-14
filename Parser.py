@@ -29,10 +29,11 @@ class BlogSpider(scrapy.Spider):
         # в переменную page кладем 2й символ, то есть номер. Для каждой страницы он уникален.
         page = response.url.split("/")[-2]
 
-        # генерируем имя файла, как "habr-номер_старницы"
-        file_name = f'habr-{page}.html'
+        # генерируем имя файла, как "номер_старницы"
+        file_name = f'{page}.html'
 
         # запись в переменную path_name пустого файла pages_html/habr-{page}.html через ОС
+        file_name = f'{page}.html'
         path_name = os.path.join('pages_html', file_name)
 
         # запись в файл тела ответа (вся html страница)
@@ -64,7 +65,7 @@ def parse_urls_xml(xml_file):
             # сохраняем url для дальнейшего парсинга страницы
             urls.append(elt[0].text)
             # записываем номер и url документа в файл index.txt
-            result.write("{} {}\n".format(elt.get('id'), elt[0].text))
+            result.write("{} {}\n".format(elt[0].text.split("/")[-2], elt[0].text))
         result.close()
 
     #возвращаем массив urls
