@@ -8,11 +8,11 @@ from scrapy.crawler import CrawlerProcess
 # для работы с файлом типа xml
 import xml.etree.ElementTree as ET
 
+
 # определенная структура использования паука от scrapy
 # в класс BlogSpide передается подкласс scrapy.Spider
 # в классе определяются обязательные атрибуты (name, start_request() и parse())
 class BlogSpider(scrapy.Spider):
-
     # идентифицируется паук. Уникальный в рамках проекта.
     name = 'spider'
 
@@ -48,7 +48,6 @@ class BlogSpider(scrapy.Spider):
 # файл index.xml создан по  по структуре тега <document>, у которого есть уникальный идентификатор id
 # и тег <url>, в котором располагается url страницы
 def parse_urls_xml(xml_file):
-
     # обращаемся к ElementTree, открывем соответсвующий xml файл
     doc = ET.parse(xml_file)
 
@@ -68,8 +67,9 @@ def parse_urls_xml(xml_file):
             result.write("{} {}\n".format(elt[0].text.split("/")[-2], elt[0].text))
         result.close()
 
-    #возвращаем массив urls
+    # возвращаем массив urls
     return urls
+
 
 # в переменную pages_url записывем массив url-ов
 pages_url = parse_urls_xml("index.xml")
