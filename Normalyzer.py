@@ -1,18 +1,15 @@
 import codecs
 import string
+
 import pymorphy2
 from bs4 import BeautifulSoup
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 
+# при первом запуске необходимо прогнать строки ниже для подгрузки необходимых модулей
 # nltk.download('stopwords')
-# def map_html_to_xml():
-#    for elt in parse_urls_xml("index.xml"):
-#        doc = "habr-{}.html".format(elt.split("/")[-2])
-#        with open(os.path.join('pages_html', doc), 'r') as html:
-#            a = Selector(response=html).xpath("//p/text()").getall()
-#            print(a)
-#
+# nltk.download('punkt')
+
 MARKS = [',', '.', ':', '?', '«', '»', '-', '(', ')', '!', '\'', "—", ';', "”", "...", "\'\'", "/**//**/",
          "“", "„", "–"]
 
@@ -72,18 +69,33 @@ def write_words_into_file(words):
             file.write(elem + '\n')
 
 
-# def lemitization():
-#    # normal_forms = get_normal_form(words)
-#    file = open("output.txt", "w", encoding="utf-8")
-#    for word in remove_stopwords(normal_forms):
-#        file.write(word + " ")
+def lemitization():
+    with open("words_list.txt", "r", encoding="utf-8") as lst:
+        words = lst.readlines()
+    lem_dict = {}
+    for word in words:
+        normal_form = get_normal_form(word.strip())
+        if normal_form:
+            if normal_form[0] not in lem_dict.keys():
+                lem_dict[normal_form[0]] = [word.strip()]
+            else:
+                lem_dict[normal_form[0]].append(word.strip())
+
+    file = open("output.txt", "w", encoding="utf-8")
+    for word, tokens in lem_dict.items():
+        file.write(f"{word}:")
+        [file.write(f" {tok}") for tok in set(tokens)]
+        file.write("\n")
+    file.close()
 
 
-docs_words = []
-with open("index.txt", "r") as index:
-    lines = index.readlines()
-    docs_numb = [line[: line.find(" ")] for line in lines]
-    for elt in docs_numb:
-        docs_words.extend(parse_words_from_html(f"{elt}.html"))
-
-write_words_into_file(docs_words)
+# для создания файла со списком слов (words_list.txt) нужно прогнать закомментированный код
+# docs_words = []
+# with open("index.txt", "r") as index:
+#    lines = index.readlines()
+#    docs_numb = [line[: line.find(" ")] for line in lines]
+#    for elt in docs_numb:
+#        docs_words.extend(parse_words_from_html(f"{elt}.html"))
+#
+# write_words_into_file(docs_words)
+lemitization()
