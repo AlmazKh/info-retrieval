@@ -10,10 +10,12 @@ from nltk.corpus import stopwords
 # nltk.download('stopwords')
 # nltk.download('punkt')
 
+# список символов, которые удаются из текста
 MARKS = [',', '.', ':', '?', '«', '»', '-', '(', ')', '!', '\'', "—", ';', "”", "...", "\'\'", "/**//**/",
          "“", "„", "–"]
 
 
+# парсинг текста из html
 def parse_words_from_html(html_file):
     pages_html = codecs.open(f"pages_html/{html_file}", 'r', 'utf-8')
     html = pages_html.read()
@@ -37,26 +39,34 @@ def parse_words_from_html(html_file):
 
 
 def get_normal_form(text):
+    # находим токены для каждого слова
     tokens = word_tokenize(text)
     analyzer = pymorphy2.MorphAnalyzer()
     normalized_words = []
     for token in tokens:
+        # пропускаем, если символ относится к знакам пунктуации
         if token in string.punctuation:
             continue
+        # пропускаем, если символ относится к знакам из нашего списка выше
         if token in MARKS:
             continue
+        # получаем одну из начальных форм слова
         normalized_words.append(analyzer.parse(token)[0].normal_form)
     return normalized_words
 
 
 def remove_secondary_marks(words):
+    # удаление знаков, которые являются элементами списка слов
     filtered_words = list(filter(lambda word: (word not in string.punctuation) and (word not in MARKS), words))
     result = []
+    # удаление знаков, которые являются символами слов
     for word in filtered_words:
         result.append("".join(filter(lambda char: char not in MARKS, word)))
     return result
 
 
+# удаление всех предлогов, союзов и тд
+# перевод всех слов прошедших фильтрацию к нижнему регистру
 def remove_stopwords(word_tokens):
     stop_words = set(stopwords.words('russian'))
     filtered_sentences = [w.lower() for w in word_tokens if w not in stop_words]
@@ -65,22 +75,31 @@ def remove_stopwords(word_tokens):
 
 def write_words_into_file(words):
     with open("words_list.txt", "w", encoding="utf-8") as file:
+        # записываем, удаляя предлоги, союзы и знаки
         for elem in remove_stopwords(remove_secondary_marks(words)):
             file.write(elem + '\n')
 
 
 def lemitization():
+    # считываем все слова из ранее полученного файла
     with open("words_list.txt", "r", encoding="utf-8") as lst:
         words = lst.readlines()
+    # словарь, где ключ - начальная форма слова, а значение - список вариаций этого слова, которые встретились в данных
     lem_dict = {}
     for word in words:
+        # получаем начальную форму слова
         normal_form = get_normal_form(word.strip())
         if normal_form:
+            # если такое слово еще не встречалось,создаем ключ с нормальной формой и помещаем само слово как значение
             if normal_form[0] not in lem_dict.keys():
                 lem_dict[normal_form[0]] = [word.strip()]
+            # если такое слово встречалось ранее, добавляем его вариацию в список значений
             else:
                 lem_dict[normal_form[0]].append(word.strip())
 
+    # записываем полученные результаты в формате:
+    # "начальная форма слова: токен токен ..."
+    # знак ":" служит разделителем между ключом и значениями
     file = open("output.txt", "w", encoding="utf-8")
     for word, tokens in lem_dict.items():
         file.write(f"{word}:")
