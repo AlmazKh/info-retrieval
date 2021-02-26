@@ -73,10 +73,15 @@ def remove_stopwords(word_tokens):
     return filtered_sentences
 
 
+# удаление чисел, каких-то кривых составных слов из символов, букв и чисел - всего, что не является набором букв
+def remove_numbers_and_etc(words):
+    return filter(lambda word: word.isalpha(), words)
+
+
 def write_words_into_file(words):
     with open("words_list.txt", "w", encoding="utf-8") as file:
-        # записываем, удаляя предлоги, союзы и знаки
-        for elem in remove_stopwords(remove_secondary_marks(words)):
+        # записываем, удаляя предлоги, союз, знаки, числа и все непонятные символы
+        for elem in remove_numbers_and_etc(remove_stopwords(remove_secondary_marks(words))):
             file.write(elem + '\n')
 
 
@@ -111,10 +116,9 @@ def lemitization():
 # для создания файла со списком слов (words_list.txt) нужно прогнать закомментированный код
 # docs_words = []
 # with open("index.txt", "r") as index:
-#    lines = index.readlines()
-#    docs_numb = [line[: line.find(" ")] for line in lines]
-#    for elt in docs_numb:
-#        docs_words.extend(parse_words_from_html(f"{elt}.html"))
-#
+#     lines = index.readlines()
+#     docs_numb = [line[: line.find(" ")] for line in lines]
+#     for elt in docs_numb:
+#         docs_words.extend(parse_words_from_html(f"{elt}.html"))
 # write_words_into_file(docs_words)
 lemitization()
