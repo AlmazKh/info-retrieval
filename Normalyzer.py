@@ -121,4 +121,4 @@ def lemitization():
 #     for elt in docs_numb:
 #         docs_words.extend(parse_words_from_html(f"{elt}.html"))
 # write_words_into_file(docs_words)
-lemitization()
+# lemitization()

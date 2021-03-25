@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<responses>
+  <request value="-разработчики открыть сервис">
+    <doc id="541746" url="https://habr.com/ru/news/t/541746/"/>
+    <doc id="541726" url="https://habr.com/ru/news/t/541726/"/>
+    <doc id="541718" url="https://habr.com/ru/news/t/541718/"/>
+    <doc id="541644" url="https://habr.com/ru/news/t/541644/"/>
+    <doc id="541386" url="https://habr.com/ru/news/t/541386/"/>
+  </request>
+  <request value="лучше сиди дома">
+    <doc id="542056" url="https://habr.com/ru/news/t/542056/"/>
+  </request>
+  <request value="обслуживающий по -улице заболеешь">
+    <doc id="542060" url="https://habr.com/ru/news/t/542060/"/>
+  </request>
+  <request value="нашёл -уязвимость я тестировщик">
+    <doc id="541942" url="https://habr.com/ru/news/t/541942/"/>
+    <doc id="541902" url="https://habr.com/ru/news/t/541902/"/>
+    <doc id="541576" url="https://habr.com/ru/company/JetBrains/news/t/541576/"/>
+    <doc id="541532" url="https://habr.com/ru/news/t/541532/"/>
+    <doc id="541418" url="https://habr.com/ru/news/t/541418/"/>
+    <doc id="541278" url="https://habr.com/ru/news/t/541278/"/>
+  </request>
+  <request value="настройка системы">
+    <doc id="541854" url="https://habr.com/ru/news/t/541854/"/>
+    <doc id="541244" url="https://habr.com/ru/news/t/541244/"/>
+  </request>
+  <request value="-разработчики мозги дания хуан">
+    <doc id="541080" url="https://habr.com/ru/news/t/541080/"/>
+  </request>
+</responses>
+
