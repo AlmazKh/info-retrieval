@@ -15,8 +15,8 @@ def get_words_count_from_docs():
         docs_numb = [line[: line.find(" ")] for line in lines]
         for elt in docs_numb:
             # создаем словарь формата -> номер документа: количество слов
-            docs_words_amount[elt] = list(remove_numbers_and_etc(
-                remove_stopwords(remove_secondary_marks(parse_words_from_html(f"{elt}.html"))))).__len__()
+            docs_words_amount[elt] = list(
+                remove_numbers_and_etc(remove_secondary_marks(parse_words_from_html(f"{elt}.html")))).__len__()
     return docs_words_amount
 
 
