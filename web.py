@@ -1,8 +1,15 @@
+# streamlit для разворота приложения
 import streamlit as st
 
-st.title('Поисквая система')
+def web_search():
 
-title = st.text_input('Что найти?', 'Слово')
+    st.title('Поисквая система')
+    title = st.text_input('Что найти?', 'Слово')
+    if st.button('Найти'):
+        st.write('Идет поиск.... по ...', title)
 
-if st.button('Найти'):
-    st.write('Идет поиск.... по ...', title)
+    # возвращем строку, которую необходимо найти
+    return title
+
+web_search()
+# print(web_search())
