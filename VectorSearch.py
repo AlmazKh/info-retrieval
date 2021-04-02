@@ -7,6 +7,10 @@ import numpy as np
 from Normalyzer import remove_stopwords, get_normal_form
 from TermsGenerator import prettify, sanitize, get_doc_url
 
+import web
+import streamlit as st
+import pandas as pd
+
 docs_numb = {}
 with open("index.txt", "r") as index:
     lines = index.readlines()
@@ -84,6 +88,6 @@ def create_resp_with_sim(requests):
     print(prettify(top), file=w)
 
 
-requests = ["разработчики", "сиди дома"]
+requests = web_search()
 
 create_resp_with_sim(requests)
