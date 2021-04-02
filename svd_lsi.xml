@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<responses>
+  <request value="разработчики">
+    <response number="1" sim="0.44079934530458137" url="https://habr.com/ru/news/t/541200/"/>
+    <response number="2" sim="0.44079379914122374" url="https://habr.com/ru/news/t/541310/"/>
+    <response number="3" sim="0.44078102589808976" url="https://habr.com/ru/news/t/541606/"/>
+    <response number="4" sim="0.44077754952411347" url="https://habr.com/ru/news/t/541286/"/>
+    <response number="5" sim="0.4407353046588137" url="https://habr.com/ru/news/t/541550/"/>
+    <response number="6" sim="0.44043838976819755" url="https://habr.com/ru/news/t/541468/"/>
+    <response number="7" sim="0.4403122065580058" url="https://habr.com/ru/company/itsumma/news/t/541292/"/>
+    <response number="8" sim="0.44003116692687355" url="https://habr.com/ru/news/t/541132/"/>
+    <response number="9" sim="0.43925516362393735" url="https://habr.com/ru/news/t/541336/"/>
+    <response number="10" sim="0.43878341112183017" url="https://habr.com/ru/news/t/541986/"/>
+  </request>
+  <request value="сиди дома">
+    <response number="1" sim="0.7806080957570753" url="https://habr.com/ru/news/t/541828/"/>
+    <response number="2" sim="0.7805503334486907" url="https://habr.com/ru/news/t/541318/"/>
+    <response number="3" sim="0.7804845804577961" url="https://habr.com/ru/news/t/541358/"/>
+    <response number="4" sim="0.7800016214684994" url="https://habr.com/ru/news/t/541986/"/>
+    <response number="5" sim="0.7795786177157837" url="https://habr.com/ru/news/t/541336/"/>
+    <response number="6" sim="0.7771195768209055" url="https://habr.com/ru/news/t/541468/"/>
+    <response number="7" sim="0.7740749429838405" url="https://habr.com/ru/news/t/541310/"/>
+    <response number="8" sim="0.7738712476082605" url="https://habr.com/ru/news/t/541080/"/>
+    <response number="9" sim="0.773212116201381" url="https://habr.com/ru/news/t/541200/"/>
+    <response number="10" sim="0.7727630463355752" url="https://habr.com/ru/news/t/541532/"/>
+  </request>
+</responses>
+
