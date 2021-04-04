@@ -7,7 +7,8 @@ import numpy as np
 from Normalyzer import remove_stopwords, get_normal_form
 from TermsGenerator import prettify, sanitize, get_doc_url
 
-import web
+# streamlit необходим для визуализации поисковой системы, он позволяет
+# быстро развернуть приложение на локальном сервере
 import streamlit as st
 import pandas as pd
 
@@ -53,9 +54,11 @@ def refactor_matrix_with_k(U, S, V):
 
 
 def create_resp_with_sim(req):
+    top = Element('responses')
     table_with_sim = dict()
     clean_req = remove_stopwords(get_normal_form(sanitize(req)))
     matrix, q = create_matrix_and_query(clean_req)
+    child = SubElement(top, "request", dict({'value': req}))
     U, S, V = svd_matrix(matrix)
     Uk, Sk_1, Vk_T = refactor_matrix_with_k(U, S, V)
     new_q = np.dot(q, Uk).dot(Sk_1)
@@ -71,17 +74,35 @@ def create_resp_with_sim(req):
             sim = score_first / math.sqrt(multipl_q) / math.sqrt(multipl_d)
         table_with_sim.update({i + 1: sim})
     sorted_dict = {k: v for k, v in sorted(table_with_sim.items(), key=lambda it_: it_[1], reverse=True)}
-    sorted_dict_iter = iter(sorted_dict)
+    print(sorted_dict)
+    # sorted_dict_iter = iter(sorted_dict)
     result_url_list = []
-    for el in sorted_dict.values():
-        result_url_list.append(get_doc_url()[numb[int(el + 1)]])
+    # for el in sorted_dict.values():
+    #     result_url_list.append(get_doc_url()[numb[int(el + 1)]])
+    number = 1
+    sorted_dict_iter = iter(sorted_dict)
+    for el in sorted_dict_iter:
+        if number > 20:
+            break
+        # SubElement(child, "response",
+        #            dict({'number': str(number), 'sim': str(table_with_sim.get(el)),
+        #                  'url': str(get_doc_url()[numb[el + 1]])}))
 
+        # print(dict({'number': str(number), 'sim': str(table_with_sim.get(el)),
+        #                  'url': str(get_doc_url()[numb[el + 1]])}))
+        result_url_list.append(str(get_doc_url()[numb[el + 1]]))
+        number += 1
+
+    print(result_url_list)
     df = pd.DataFrame(result_url_list)
     st.table(df)
 
 
-st.title('Поисквая система')
-title = st.text_input('Что найти?', 'Слово')
+
+st.title('Поисковая система')
+title = st.text_input('Что найти?')
 if st.button('Найти'):
     st.write('Идет поиск.... по ...', title)
     create_resp_with_sim(title)
+
+st.text('Made by Almaz Khamedzhanov and Guzel Musina')
